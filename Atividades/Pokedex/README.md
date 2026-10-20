@@ -15,6 +15,7 @@ Pokédex interativa com os 151 Pokémon da primeira geração. Permite pesquisar
 - Lista de Pokémon com ID, nome, tipos e atributos (HP, Attack, Defense, Special Attack, Special Defense e Speed)
 - Pesquisa por nome ou ID, atualizada enquanto o usuário digita
 - Filtro por tipo, com os tipos presentes no `pokedex-data.json`
+- Ordenação por ID, nome ou atributo (do maior para o menor)
 - Modal de detalhes com barras de atributos
 - Botão para sortear um Pokémon aleatório entre os exibidos
 - Aba de treinadores com insígnias e Pokémon de cada um
@@ -77,6 +78,8 @@ Pokedex/
     ├── components/
     │   ├── Header.jsx          # título e abas Pokémon / Treinadores
     │   ├── SearchBar.jsx       # campo de pesquisa
+    │   ├── SortSelect.jsx      # seleção da ordenação
+    │   ├── RandomButton.jsx    # sorteio de um Pokémon
     │   ├── TypeFilter.jsx      # botões de filtro por tipo
     │   ├── PokemonList.jsx     # grade de cards e mensagem de lista vazia
     │   ├── PokemonCard.jsx     # card de um Pokémon

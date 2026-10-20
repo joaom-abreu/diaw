@@ -2,6 +2,7 @@ import { useState } from "react";
 import data from "./data/pokedex-data.json";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
+import SortSelect from "./components/SortSelect";
 import RandomButton from "./components/RandomButton";
 import TypeFilter from "./components/TypeFilter";
 import PokemonList from "./components/PokemonList";
@@ -28,15 +29,25 @@ function matchesType(pokemon, typeId) {
   return typeId === null || pokemon.types.some((type) => type.id === typeId);
 }
 
+function sortPokemon(pokemon, sortBy) {
+  return [...pokemon].sort((a, b) => {
+    if (sortBy === "id") return a.id - b.id;
+    if (sortBy === "name") return a.name.localeCompare(b.name);
+    return b.stats[sortBy] - a.stats[sortBy];
+  });
+}
+
 function App() {
   const [page, setPage] = useState("pokedex");
   const [search, setSearch] = useState("");
   const [selectedTypeId, setSelectedTypeId] = useState(null);
+  const [sortBy, setSortBy] = useState("id");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   const filteredPokemon = allPokemon.filter(
     (pokemon) => matchesSearch(pokemon, search) && matchesType(pokemon, selectedTypeId)
   );
+  const sortedPokemon = sortPokemon(filteredPokemon, sortBy);
 
   return (
     <>
@@ -47,10 +58,11 @@ function App() {
           <>
             <div className="toolbar">
               <SearchBar value={search} onChange={setSearch} />
+              <SortSelect value={sortBy} onChange={setSortBy} />
               <RandomButton pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
             </div>
             <TypeFilter types={usedTypes} selectedTypeId={selectedTypeId} onSelect={setSelectedTypeId} />
-            <PokemonList pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
+            <PokemonList pokemon={sortedPokemon} onSelect={setSelectedPokemon} />
           </>
         ) : (
           <TrainerList trainers={data.trainers} pokemon={allPokemon} onSelectPokemon={setSelectedPokemon} />
