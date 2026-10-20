@@ -16,6 +16,7 @@ Pokédex interativa com os 151 Pokémon da primeira geração. Permite pesquisar
 - Pesquisa por nome ou ID, atualizada enquanto o usuário digita
 - Filtro por tipo, com os tipos presentes no `pokedex-data.json`
 - Modal de detalhes com barras de atributos
+- Botão para sortear um Pokémon aleatório entre os exibidos
 - Aba de treinadores com insígnias e Pokémon de cada um
 - Mensagem quando nenhum Pokémon é encontrado
 - Layout responsivo

@@ -3,3 +3,8 @@
   margin: 0 auto;
   padding: 24px 16px;
 }
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+}

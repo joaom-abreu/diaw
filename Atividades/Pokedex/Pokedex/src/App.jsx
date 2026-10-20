@@ -2,6 +2,7 @@ import { useState } from "react";
 import data from "./data/pokedex-data.json";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
+import RandomButton from "./components/RandomButton";
 import TypeFilter from "./components/TypeFilter";
 import PokemonList from "./components/PokemonList";
 import PokemonDetails from "./components/PokemonDetails";
@@ -44,7 +45,10 @@ function App() {
       <main className="container">
         {page === "pokedex" ? (
           <>
-            <SearchBar value={search} onChange={setSearch} />
+            <div className="toolbar">
+              <SearchBar value={search} onChange={setSearch} />
+              <RandomButton pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
+            </div>
             <TypeFilter types={usedTypes} selectedTypeId={selectedTypeId} onSelect={setSelectedTypeId} />
             <PokemonList pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
           </>
