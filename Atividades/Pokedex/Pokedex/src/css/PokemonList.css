@@ -1,0 +1,16 @@
+.pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.result-count {
+  opacity: 0.7;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 48px;
+  opacity: 0.7;
+}

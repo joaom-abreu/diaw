@@ -1,0 +1,38 @@
+.stat-bar {
+  display: grid;
+  grid-template-columns: 130px 40px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  text-align: right;
+}
+
+.stat-track {
+  height: 10px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--type-color);
+}
+
+@media (max-width: 480px) {
+  .stat-bar {
+    grid-template-columns: 105px 32px 1fr;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
