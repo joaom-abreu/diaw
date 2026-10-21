@@ -11,3 +11,5 @@
   *Autores: [Álvaro Barbosa Ferreira Silva](https://github.com/Alvarodocxp) e [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
 - **[Atividade 02](Atividades/SecureLoginPUC):** Tela de Login com Spring Boot + Thymeleaf  
   *Autores: [Álvaro Barbosa Ferreira Silva](https://github.com/Alvarodocxp) e [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
+- **[Atividade 03](Atividades/Pokedex):** Pokédex com React + Vite  
+  *Autor: [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
