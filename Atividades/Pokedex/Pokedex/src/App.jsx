@@ -10,14 +10,8 @@ import PokemonDetails from "./components/PokemonDetails";
 import TrainerList from "./components/TrainerList";
 import "./css/App.css";
 
-const typeless = data.types.find((type) => type.name === "Typeless");
-
-const allPokemon = data.pokemon.map((pokemon) =>
-  pokemon.types.length > 0 ? pokemon : { ...pokemon, types: [typeless] }
-);
-
 const usedTypes = data.types.filter((type) =>
-  allPokemon.some((pokemon) => pokemon.types.some((t) => t.id === type.id))
+  data.pokemon.some((pokemon) => pokemon.types.some((t) => t.id === type.id))
 );
 
 function matchesSearch(pokemon, search) {
@@ -44,7 +38,7 @@ function App() {
   const [sortBy, setSortBy] = useState("id");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  const filteredPokemon = allPokemon.filter(
+  const filteredPokemon = data.pokemon.filter(
     (pokemon) => matchesSearch(pokemon, search) && matchesType(pokemon, selectedTypeId)
   );
   const sortedPokemon = sortPokemon(filteredPokemon, sortBy);
@@ -65,7 +59,7 @@ function App() {
             <PokemonList pokemon={sortedPokemon} onSelect={setSelectedPokemon} />
           </>
         ) : (
-          <TrainerList trainers={data.trainers} pokemon={allPokemon} onSelectPokemon={setSelectedPokemon} />
+          <TrainerList trainers={data.trainers} pokemon={data.pokemon} onSelectPokemon={setSelectedPokemon} />
         )}
       </main>
 
