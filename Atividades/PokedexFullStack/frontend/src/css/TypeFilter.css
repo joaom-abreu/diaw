@@ -1,0 +1,27 @@
+.type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.type-filter button {
+  padding: 6px 14px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-color: var(--type-color, #44475a);
+  color: #fff;
+  font-weight: 600;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.type-filter button:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.type-filter button.active {
+  opacity: 1;
+  border-color: #fff;
+}

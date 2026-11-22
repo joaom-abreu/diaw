@@ -1,0 +1,21 @@
+.random-button {
+  padding: 0 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #d62828 0%, #a4161a 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.random-button:hover {
+  transform: translateY(-2px);
+}
+
+.random-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
