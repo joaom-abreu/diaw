@@ -82,14 +82,6 @@ O frontend concentra todas as chamadas à API em `src/services/api.js`. Pesquisa
 
 Os dados vêm do `Script_Pokedex.sql`, que modela a Pokédex em tabelas relacionais. O script `database/sql_to_json.py` converte esse SQL em dois arquivos JSON (`backend/src/main/resources/data/`), que o `DataSeeder` insere no MongoDB na primeira execução.
 
-| SQL | MongoDB | Por quê |
-|-----|---------|---------|
-| `Pokemon` | coleção `pokemons`, com `_id` = número da Pokédex | o número já identifica o Pokémon e é usado na URL e na imagem |
-| colunas `HP`, `Attack`, ... | subdocumento `stats` | os atributos são sempre lidos juntos |
-| `Types` + `Rel_Pokemon_Type` (N:N) | array `types` de strings, **embutido** no Pokémon | lista pequena e fixa, sempre lida junto com o Pokémon |
-| `Trainers` | coleção `trainers` | entidade própria |
-| `Rel_Trainer_Pokemon` | array `pokemonIds` no treinador, por **referência** | o Pokémon pode ser editado ou excluído; uma cópia embutida ficaria desatualizada |
-
 ```json
 // pokemons
 { "_id": 25, "name": "Pikachu",
@@ -101,21 +93,6 @@ Os dados vêm do `Script_Pokedex.sql`, que modela a Pokédex em tabelas relacion
 ```
 
 Na API o campo continua se chamando `id`; só dentro do MongoDB ele vira `_id`. O Spring Data também grava em cada documento um campo `_class` com o nome da classe Java (ex.: `br.pucminas.pokedex.model.Pokemon`), usado internamente para ler o documento de volta; ele não aparece nas respostas da API.
-
-##### Correções feitas na conversão
-
-- **Mew (#151) não tem tipo** em `Rel_Pokemon_Type`. Recebe `Psychic`, como na Atividade 03.
-- O tipo `Typeless` (id 0) não é usado por nenhum Pokémon e ficou fora da lista de tipos do frontend.
-- `Farfetch''d` vem com o apóstrofo escapado do SQL e é gravado como `Farfetch'd`.
-- `Rel_Trainer_Pokemon` tem pares repetidos: Koga tem três Venonat (#48) e Lance tem dois Dragonite (#149). Os repetidos foram mantidos, porque um treinador pode ter dois Pokémon da mesma espécie.
-
-Resultado: 151 Pokémon e 12 treinadores, com 43 relações treinador–Pokémon.
-
-Para gerar os JSON de novo a partir do SQL:
-
-```bash
-python3 database/sql_to_json.py
-```
 
 ---
 
