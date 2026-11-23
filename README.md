@@ -13,5 +13,5 @@
   *Autores: [Álvaro Barbosa Ferreira Silva](https://github.com/Alvarodocxp) e [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
 - **[Atividade 03](Atividades/Pokedex):** Pokédex com React + Vite  
   *Autor: [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
-- **[Atividade 04](Atividades/PokedexFullStack):** Pokédex Full Stack com Spring Boot + MongoDB  
+- **[Atividade 04](Atividades/PokedexFullStack):** Pokédex com Spring Boot + MongoDB  
   *Autor: [João Mário Paes de Abreu](https://github.com/joaom-abreu)*
