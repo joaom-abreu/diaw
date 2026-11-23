@@ -18,6 +18,11 @@ public class GlobalExceptionHandler {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
 	}
 
+	@ExceptionHandler(TrainerNotFoundException.class)
+	public ProblemDetail handleTrainerNotFound(TrainerNotFoundException exception) {
+		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
+	}
+
 	@ExceptionHandler(PokemonAlreadyExistsException.class)
 	public ProblemDetail handleAlreadyExists(PokemonAlreadyExistsException exception) {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());

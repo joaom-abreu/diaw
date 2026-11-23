@@ -81,3 +81,9 @@ DELETE {{baseUrl}}/pokemons/999
 
 ### Listar todos os treinadores (200)
 GET {{baseUrl}}/trainers
+
+### Listar os Pokémon do Koga, com repetidos (200)
+GET {{baseUrl}}/trainers/6/pokemons
+
+### Listar os Pokémon de treinador inexistente (404)
+GET {{baseUrl}}/trainers/99/pokemons

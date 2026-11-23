@@ -192,8 +192,11 @@ O nome do banco é definido separadamente (`pokedex`, por padrão), para que os 
 | PUT | `/api/pokemons/{id}` | `200` | `400`, `404` |
 | DELETE | `/api/pokemons/{id}` | `204` | `404` |
 | GET | `/api/trainers` | `200`, ordenado por id | — |
+| GET | `/api/trainers/{id}/pokemons` | `200`, Pokémon completos do treinador | `404` |
 
 Os filtros `name` e `type` são opcionais e podem ser usados juntos (`?name=a&type=Water`). A busca por nome ignora maiúsculas e minúsculas; o tipo deve ser escrito como na lista de tipos (`Fire`, não `fire`). O frontend continua filtrando no navegador, para não fazer uma requisição a cada tecla digitada.
+
+O endpoint `/api/trainers/{id}/pokemons` resolve a referência `pokemonIds` do treinador: para cada id, busca o Pokémon na coleção `pokemons`. É o equivalente ao `JOIN` com `Rel_Trainer_Pokemon` do SQL, feito pela aplicação. A ordem e os repetidos do treinador são mantidos, e Pokémon que foram excluídos são ignorados.
 
 No PUT vale o id da URL; o id enviado no corpo é ignorado.
 

@@ -3,9 +3,11 @@ package br.pucminas.pokedex.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.pucminas.pokedex.model.Pokemon;
 import br.pucminas.pokedex.model.Trainer;
 import br.pucminas.pokedex.service.TrainerService;
 
@@ -22,5 +24,10 @@ public class TrainerController {
 	@GetMapping
 	public List<Trainer> findAll() {
 		return trainerService.findAll();
+	}
+
+	@GetMapping("/{id}/pokemons")
+	public List<Pokemon> findPokemons(@PathVariable Integer id) {
+		return trainerService.findPokemons(id);
 	}
 }
