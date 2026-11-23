@@ -11,12 +11,15 @@ function TrainerList({ trainers, pokemon, onSelectPokemon }) {
           <h2>{trainer.name}</h2>
           <p className="trainer-badges">🏅 {trainer.badges} insígnia(s)</p>
           <div className="trainer-pokemon">
-            {trainer.pokemonIds.map(findPokemon).map((item) => (
-              <button key={item.id} onClick={() => onSelectPokemon(item)} title={item.name}>
-                <img src={getPokemonImage(item.id)} alt={item.name} loading="lazy" />
-                <span>{item.name}</span>
-              </button>
-            ))}
+            {trainer.pokemonIds
+              .map(findPokemon)
+              .filter((item) => item !== undefined)
+              .map((item, index) => (
+                <button key={index} onClick={() => onSelectPokemon(item)} title={item.name}>
+                  <img src={getPokemonImage(item.id)} alt={item.name} loading="lazy" />
+                  <span>{item.name}</span>
+                </button>
+              ))}
           </div>
         </div>
       ))}
