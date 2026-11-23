@@ -11,7 +11,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import br.pucminas.pokedex.model.Pokemon;
+import br.pucminas.pokedex.model.Trainer;
 import br.pucminas.pokedex.repository.PokemonRepository;
+import br.pucminas.pokedex.repository.TrainerRepository;
 import tools.jackson.databind.json.JsonMapper;
 
 @Component
@@ -20,15 +22,23 @@ public class DataSeeder implements CommandLineRunner {
 	private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
 
 	private final PokemonRepository pokemonRepository;
+	private final TrainerRepository trainerRepository;
 	private final JsonMapper jsonMapper;
 
-	public DataSeeder(PokemonRepository pokemonRepository, JsonMapper jsonMapper) {
+	public DataSeeder(PokemonRepository pokemonRepository, TrainerRepository trainerRepository,
+			JsonMapper jsonMapper) {
 		this.pokemonRepository = pokemonRepository;
+		this.trainerRepository = trainerRepository;
 		this.jsonMapper = jsonMapper;
 	}
 
 	@Override
 	public void run(String... args) throws IOException {
+		seedPokemons();
+		seedTrainers();
+	}
+
+	private void seedPokemons() throws IOException {
 		if (pokemonRepository.count() > 0) {
 			return;
 		}
@@ -37,9 +47,24 @@ public class DataSeeder implements CommandLineRunner {
 		log.info("{} pokémon inseridos no MongoDB", pokemons.size());
 	}
 
+	private void seedTrainers() throws IOException {
+		if (trainerRepository.count() > 0) {
+			return;
+		}
+		List<Trainer> trainers = readTrainers();
+		trainerRepository.saveAll(trainers);
+		log.info("{} treinadores inseridos no MongoDB", trainers.size());
+	}
+
 	private List<Pokemon> readPokemons() throws IOException {
 		try (InputStream input = new ClassPathResource("data/pokemons.json").getInputStream()) {
 			return List.of(jsonMapper.readValue(input, Pokemon[].class));
+		}
+	}
+
+	private List<Trainer> readTrainers() throws IOException {
+		try (InputStream input = new ClassPathResource("data/trainers.json").getInputStream()) {
+			return List.of(jsonMapper.readValue(input, Trainer[].class));
 		}
 	}
 }
