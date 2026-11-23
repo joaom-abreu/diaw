@@ -9,7 +9,7 @@ function PokemonDetails({ pokemon, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className={`modal bg-${pokemon.types[0].name.toLowerCase()}`}
+        className={`modal bg-${pokemon.types[0].toLowerCase()}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button className="modal-close" onClick={onClose}>×</button>
@@ -18,7 +18,7 @@ function PokemonDetails({ pokemon, onClose }) {
         <h2>{pokemon.name}</h2>
         <div className="pokemon-types">
           {pokemon.types.map((type) => (
-            <TypeBadge key={type.id} type={type} />
+            <TypeBadge key={type} type={type} />
           ))}
         </div>
         <div className="modal-stats">

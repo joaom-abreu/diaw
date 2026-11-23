@@ -1,5 +1,6 @@
-import { useState } from "react";
-import data from "./data/pokedex-data.json";
+import { useEffect, useState } from "react";
+import { getPokemons, getTrainers } from "./services/api";
+import { POKEMON_TYPES } from "./utils/pokemonTypes";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import SortSelect from "./components/SortSelect";
@@ -10,17 +11,13 @@ import PokemonDetails from "./components/PokemonDetails";
 import TrainerList from "./components/TrainerList";
 import "./css/App.css";
 
-const usedTypes = data.types.filter((type) =>
-  data.pokemon.some((pokemon) => pokemon.types.some((t) => t.id === type.id))
-);
-
 function matchesSearch(pokemon, search) {
   const text = search.trim().toLowerCase();
   return pokemon.name.toLowerCase().includes(text) || String(pokemon.id) === text;
 }
 
-function matchesType(pokemon, typeId) {
-  return typeId === null || pokemon.types.some((type) => type.id === typeId);
+function matchesType(pokemon, type) {
+  return type === null || pokemon.types.includes(type);
 }
 
 function sortPokemon(pokemon, sortBy) {
@@ -32,16 +29,44 @@ function sortPokemon(pokemon, sortBy) {
 }
 
 function App() {
+  const [pokemons, setPokemons] = useState([]);
+  const [trainers, setTrainers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [page, setPage] = useState("pokedex");
   const [search, setSearch] = useState("");
-  const [selectedTypeId, setSelectedTypeId] = useState(null);
+  const [selectedType, setSelectedType] = useState(null);
   const [sortBy, setSortBy] = useState("id");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  const filteredPokemon = data.pokemon.filter(
-    (pokemon) => matchesSearch(pokemon, search) && matchesType(pokemon, selectedTypeId)
+  useEffect(() => {
+    Promise.all([getPokemons(), getTrainers()])
+      .then(([pokemonData, trainerData]) => {
+        setPokemons(pokemonData);
+        setTrainers(trainerData);
+      })
+      .catch(() => setError("Não foi possível conectar à API."))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const usedTypes = POKEMON_TYPES.filter((type) =>
+    pokemons.some((pokemon) => pokemon.types.includes(type))
+  );
+  const filteredPokemon = pokemons.filter(
+    (pokemon) => matchesSearch(pokemon, search) && matchesType(pokemon, selectedType)
   );
   const sortedPokemon = sortPokemon(filteredPokemon, sortBy);
+
+  const message = loading ? "Carregando Pokémon..." : error;
+
+  if (message) {
+    return (
+      <>
+        <Header page={page} onChangePage={setPage} />
+        <p className="empty-message">{message}</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -55,11 +80,11 @@ function App() {
               <SortSelect value={sortBy} onChange={setSortBy} />
               <RandomButton pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
             </div>
-            <TypeFilter types={usedTypes} selectedTypeId={selectedTypeId} onSelect={setSelectedTypeId} />
+            <TypeFilter types={usedTypes} selectedType={selectedType} onSelect={setSelectedType} />
             <PokemonList pokemon={sortedPokemon} onSelect={setSelectedPokemon} />
           </>
         ) : (
-          <TrainerList trainers={data.trainers} pokemon={data.pokemon} onSelectPokemon={setSelectedPokemon} />
+          <TrainerList trainers={trainers} pokemon={pokemons} onSelectPokemon={setSelectedPokemon} />
         )}
       </main>
 

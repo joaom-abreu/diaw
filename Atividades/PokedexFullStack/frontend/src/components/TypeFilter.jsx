@@ -1,18 +1,18 @@
 import "../css/TypeFilter.css";
 
-function TypeFilter({ types, selectedTypeId, onSelect }) {
+function TypeFilter({ types, selectedType, onSelect }) {
   return (
     <div className="type-filter">
-      <button className={selectedTypeId === null ? "active" : ""} onClick={() => onSelect(null)}>
+      <button className={selectedType === null ? "active" : ""} onClick={() => onSelect(null)}>
         Todos
       </button>
       {types.map((type) => (
         <button
-          key={type.id}
-          className={`type-${type.name.toLowerCase()} ${selectedTypeId === type.id ? "active" : ""}`}
-          onClick={() => onSelect(type.id)}
+          key={type}
+          className={`type-${type.toLowerCase()} ${selectedType === type ? "active" : ""}`}
+          onClick={() => onSelect(type)}
         >
-          {type.name}
+          {type}
         </button>
       ))}
     </div>
