@@ -3,6 +3,15 @@
 ### Listar todos os Pokémon (200)
 GET {{baseUrl}}/pokemons
 
+### Buscar Pokémon por nome (200)
+GET {{baseUrl}}/pokemons?name=char
+
+### Buscar Pokémon por tipo (200)
+GET {{baseUrl}}/pokemons?type=Fire
+
+### Buscar Pokémon por nome e tipo (200)
+GET {{baseUrl}}/pokemons?name=a&type=Water
+
 ### Buscar o Pikachu (200)
 GET {{baseUrl}}/pokemons/25
 

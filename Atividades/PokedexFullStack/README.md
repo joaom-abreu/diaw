@@ -185,11 +185,15 @@ O nome do banco é definido separadamente (`pokedex`, por padrão), para que os 
 | Método | Endpoint | Sucesso | Erros |
 |--------|----------|---------|-------|
 | GET | `/api/pokemons` | `200`, ordenado por id | — |
+| GET | `/api/pokemons?name=char` | `200`, Pokémon cujo nome contém o texto | — |
+| GET | `/api/pokemons?type=Fire` | `200`, Pokémon que têm o tipo | — |
 | GET | `/api/pokemons/{id}` | `200` | `404` |
 | POST | `/api/pokemons` | `201` + header `Location` | `400` dados inválidos, `409` id já existe |
 | PUT | `/api/pokemons/{id}` | `200` | `400`, `404` |
 | DELETE | `/api/pokemons/{id}` | `204` | `404` |
 | GET | `/api/trainers` | `200`, ordenado por id | — |
+
+Os filtros `name` e `type` são opcionais e podem ser usados juntos (`?name=a&type=Water`). A busca por nome ignora maiúsculas e minúsculas; o tipo deve ser escrito como na lista de tipos (`Fire`, não `fire`). O frontend continua filtrando no navegador, para não fazer uma requisição a cada tecla digitada.
 
 No PUT vale o id da URL; o id enviado no corpo é ignorado.
 

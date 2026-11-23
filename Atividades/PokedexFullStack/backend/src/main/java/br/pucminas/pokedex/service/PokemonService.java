@@ -13,14 +13,25 @@ import br.pucminas.pokedex.repository.PokemonRepository;
 @Service
 public class PokemonService {
 
+	private static final Sort BY_ID = Sort.by("id");
+
 	private final PokemonRepository pokemonRepository;
 
 	public PokemonService(PokemonRepository pokemonRepository) {
 		this.pokemonRepository = pokemonRepository;
 	}
 
-	public List<Pokemon> findAll() {
-		return pokemonRepository.findAll(Sort.by("id"));
+	public List<Pokemon> findAll(String name, String type) {
+		if (name != null && type != null) {
+			return pokemonRepository.findByNameContainingIgnoreCaseAndTypesContaining(name, type, BY_ID);
+		}
+		if (name != null) {
+			return pokemonRepository.findByNameContainingIgnoreCase(name, BY_ID);
+		}
+		if (type != null) {
+			return pokemonRepository.findByTypesContaining(type, BY_ID);
+		}
+		return pokemonRepository.findAll(BY_ID);
 	}
 
 	public Pokemon findById(Integer id) {

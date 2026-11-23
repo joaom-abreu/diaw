@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.pucminas.pokedex.model.Pokemon;
@@ -28,8 +29,9 @@ public class PokemonController {
 	}
 
 	@GetMapping
-	public List<Pokemon> findAll() {
-		return pokemonService.findAll();
+	public List<Pokemon> findAll(@RequestParam(required = false) String name,
+			@RequestParam(required = false) String type) {
+		return pokemonService.findAll(name, type);
 	}
 
 	@GetMapping("/{id}")
