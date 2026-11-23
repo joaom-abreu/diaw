@@ -54,6 +54,30 @@ O frontend concentra todas as chamadas à API em `src/services/api.js`. Pesquisa
 
 ---
 
+### Prints
+
+| <img src="imgs/Lista.png" alt="Lista de Pokémon" width="1000"/> |
+|:----------------------------------------------------:|
+|                   Lista de Pokémon                   |
+
+| <img src="imgs/Detalhes.png" alt="Detalhes" width="1000"/> |
+|:----------------------------------------------------:|
+|           Detalhes, com Editar e Excluir             |
+
+| <img src="imgs/Formulario.png" alt="Formulário" width="1000"/> |
+|:----------------------------------------------------:|
+|              Formulário de cadastro                  |
+
+| <img src="imgs/Treinadores.png" alt="Treinadores" width="1000"/> |
+|:----------------------------------------------------:|
+|                     Treinadores                      |
+
+| <img src="imgs/Atlas.png" alt="MongoDB Atlas" width="1000"/> |
+|:----------------------------------------------------:|
+|      Coleções `pokemons` e `trainers` no Atlas       |
+
+---
+
 ### Modelagem: do SQL para o MongoDB
 
 Os dados vêm do `Script_Pokedex.sql`, que modela a Pokédex em tabelas relacionais. O script `database/sql_to_json.py` converte esse SQL em dois arquivos JSON (`backend/src/main/resources/data/`), que o `DataSeeder` insere no MongoDB na primeira execução.
@@ -76,7 +100,7 @@ Os dados vêm do `Script_Pokedex.sql`, que modela a Pokédex em tabelas relacion
 { "_id": 1, "name": "Ash", "badges": 9, "pokemonIds": [25, 3, 6, 9, 131, 143] }
 ```
 
-Na API o campo continua se chamando `id`; só dentro do MongoDB ele vira `_id`.
+Na API o campo continua se chamando `id`; só dentro do MongoDB ele vira `_id`. O Spring Data também grava em cada documento um campo `_class` com o nome da classe Java (ex.: `br.pucminas.pokedex.model.Pokemon`), usado internamente para ler o documento de volta; ele não aparece nas respostas da API.
 
 ##### Correções feitas na conversão
 
