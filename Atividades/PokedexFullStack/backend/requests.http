@@ -1,16 +1,16 @@
-@baseUrl = http://localhost:8080/api/pokemons
+@baseUrl = http://localhost:8080/api
 
 ### Listar todos os Pokémon (200)
-GET {{baseUrl}}
+GET {{baseUrl}}/pokemons
 
 ### Buscar o Pikachu (200)
-GET {{baseUrl}}/25
+GET {{baseUrl}}/pokemons/25
 
 ### Buscar Pokémon inexistente (404)
-GET {{baseUrl}}/999
+GET {{baseUrl}}/pokemons/999
 
 ### Cadastrar o Chikorita (201)
-POST {{baseUrl}}
+POST {{baseUrl}}/pokemons
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Cadastrar com id já existente (409)
-POST {{baseUrl}}
+POST {{baseUrl}}/pokemons
 Content-Type: application/json
 
 {
@@ -32,7 +32,7 @@ Content-Type: application/json
 }
 
 ### Cadastrar com dados inválidos (400)
-POST {{baseUrl}}
+POST {{baseUrl}}/pokemons
 Content-Type: application/json
 
 {
@@ -43,7 +43,7 @@ Content-Type: application/json
 }
 
 ### Atualizar o Chikorita (200)
-PUT {{baseUrl}}/152
+PUT {{baseUrl}}/pokemons/152
 Content-Type: application/json
 
 {
@@ -54,7 +54,7 @@ Content-Type: application/json
 }
 
 ### Atualizar Pokémon inexistente (404)
-PUT {{baseUrl}}/999
+PUT {{baseUrl}}/pokemons/999
 Content-Type: application/json
 
 {
@@ -65,7 +65,10 @@ Content-Type: application/json
 }
 
 ### Excluir o Chikorita (204)
-DELETE {{baseUrl}}/152
+DELETE {{baseUrl}}/pokemons/152
 
 ### Excluir Pokémon inexistente (404)
-DELETE {{baseUrl}}/999
+DELETE {{baseUrl}}/pokemons/999
+
+### Listar todos os treinadores (200)
+GET {{baseUrl}}/trainers
