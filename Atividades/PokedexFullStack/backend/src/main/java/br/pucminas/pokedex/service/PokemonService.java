@@ -34,4 +34,12 @@ public class PokemonService {
 		}
 		return pokemonRepository.save(pokemon);
 	}
+
+	public Pokemon update(Integer id, Pokemon pokemon) {
+		if (!pokemonRepository.existsById(id)) {
+			throw new PokemonNotFoundException(id);
+		}
+		Pokemon updated = new Pokemon(id, pokemon.name(), pokemon.stats(), pokemon.types());
+		return pokemonRepository.save(updated);
+	}
 }
