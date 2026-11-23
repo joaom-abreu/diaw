@@ -42,4 +42,11 @@ public class PokemonService {
 		Pokemon updated = new Pokemon(id, pokemon.name(), pokemon.stats(), pokemon.types());
 		return pokemonRepository.save(updated);
 	}
+
+	public void delete(Integer id) {
+		if (!pokemonRepository.existsById(id)) {
+			throw new PokemonNotFoundException(id);
+		}
+		pokemonRepository.deleteById(id);
+	}
 }
