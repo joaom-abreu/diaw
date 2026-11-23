@@ -78,6 +78,15 @@
   border-color: #fff;
 }
 
+.modal-button-danger {
+  border-color: #d62828;
+}
+
+.modal-button-danger:hover {
+  border-color: #d62828;
+  background-color: rgba(214, 40, 40, 0.2);
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

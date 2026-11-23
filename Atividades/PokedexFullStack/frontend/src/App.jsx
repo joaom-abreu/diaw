@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createPokemon, getPokemons, getTrainers, updatePokemon } from "./services/api";
+import { createPokemon, deletePokemon, getPokemons, getTrainers, updatePokemon } from "./services/api";
 import { POKEMON_TYPES } from "./utils/pokemonTypes";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
@@ -73,6 +73,19 @@ function App() {
     setShowForm(false);
   }
 
+  async function handleDelete(pokemon) {
+    if (!window.confirm(`Deseja excluir ${pokemon.name}?`)) {
+      return;
+    }
+    try {
+      await deletePokemon(pokemon.id);
+      setPokemons(await getPokemons());
+      setSelectedPokemon(null);
+    } catch (deleteError) {
+      window.alert(deleteError.message);
+    }
+  }
+
   const usedTypes = POKEMON_TYPES.filter((type) =>
     pokemons.some((pokemon) => pokemon.types.includes(type))
   );
@@ -120,6 +133,7 @@ function App() {
           pokemon={selectedPokemon}
           onClose={() => setSelectedPokemon(null)}
           onEdit={openEditForm}
+          onDelete={handleDelete}
         />
       )}
 
