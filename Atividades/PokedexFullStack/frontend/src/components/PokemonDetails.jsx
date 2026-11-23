@@ -3,7 +3,7 @@ import TypeBadge from "./TypeBadge";
 import { formatId, getPokemonImage } from "../utils/pokemonImage";
 import "../css/PokemonDetails.css";
 
-function PokemonDetails({ pokemon, onClose }) {
+function PokemonDetails({ pokemon, onClose, onEdit }) {
   const { stats } = pokemon;
 
   return (
@@ -28,6 +28,9 @@ function PokemonDetails({ pokemon, onClose }) {
           <StatBar label="Special Attack" value={stats.specialAttack} />
           <StatBar label="Special Defense" value={stats.specialDefense} />
           <StatBar label="Speed" value={stats.speed} />
+        </div>
+        <div className="modal-actions">
+          <button className="modal-button" onClick={() => onEdit(pokemon)}>Editar</button>
         </div>
       </div>
     </div>

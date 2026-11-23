@@ -55,6 +55,29 @@
   margin-top: 12px;
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border: 2px solid #33364a;
+  border-radius: 12px;
+  background: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: border-color 0.2s;
+}
+
+.modal-button:hover {
+  border-color: #fff;
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

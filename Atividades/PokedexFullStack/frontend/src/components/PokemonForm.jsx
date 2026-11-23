@@ -24,6 +24,16 @@ const EMPTY_FORM = {
   type2: "",
 };
 
+function toForm(pokemon) {
+  return {
+    id: pokemon.id,
+    name: pokemon.name,
+    ...pokemon.stats,
+    type1: pokemon.types[0],
+    type2: pokemon.types[1] ?? "",
+  };
+}
+
 function toPokemon(form) {
   const hasSecondType = form.type2 !== "" && form.type2 !== form.type1;
   return {
@@ -41,8 +51,9 @@ function toPokemon(form) {
   };
 }
 
-function PokemonForm({ onSave, onClose }) {
-  const [form, setForm] = useState(EMPTY_FORM);
+function PokemonForm({ pokemon, onSave, onClose }) {
+  const isEditing = pokemon !== null;
+  const [form, setForm] = useState(isEditing ? toForm(pokemon) : EMPTY_FORM);
   const [error, setError] = useState(null);
 
   const handleChange = (event) => {
@@ -62,12 +73,20 @@ function PokemonForm({ onSave, onClose }) {
     <div className="modal-overlay">
       <form className="modal pokemon-form" onSubmit={handleSubmit}>
         <button type="button" className="modal-close" onClick={onClose}>×</button>
-        <h2>Novo Pokémon</h2>
+        <h2>{isEditing ? "Editar Pokémon" : "Novo Pokémon"}</h2>
 
         <div className="form-row">
           <label>
             ID
-            <input type="number" name="id" min="1" required value={form.id} onChange={handleChange} />
+            <input
+              type="number"
+              name="id"
+              min="1"
+              required
+              disabled={isEditing}
+              value={form.id}
+              onChange={handleChange}
+            />
           </label>
           <label>
             Nome

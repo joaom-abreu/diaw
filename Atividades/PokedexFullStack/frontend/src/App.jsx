@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createPokemon, getPokemons, getTrainers } from "./services/api";
+import { createPokemon, getPokemons, getTrainers, updatePokemon } from "./services/api";
 import { POKEMON_TYPES } from "./utils/pokemonTypes";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
@@ -40,6 +40,7 @@ function App() {
   const [sortBy, setSortBy] = useState("id");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [editingPokemon, setEditingPokemon] = useState(null);
 
   useEffect(() => {
     Promise.all([getPokemons(), getTrainers()])
@@ -51,8 +52,23 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  async function handleCreate(pokemon) {
-    await createPokemon(pokemon);
+  function openNewForm() {
+    setEditingPokemon(null);
+    setShowForm(true);
+  }
+
+  function openEditForm(pokemon) {
+    setSelectedPokemon(null);
+    setEditingPokemon(pokemon);
+    setShowForm(true);
+  }
+
+  async function handleSave(pokemon) {
+    if (editingPokemon) {
+      await updatePokemon(editingPokemon.id, pokemon);
+    } else {
+      await createPokemon(pokemon);
+    }
     setPokemons(await getPokemons());
     setShowForm(false);
   }
@@ -87,7 +103,7 @@ function App() {
               <SearchBar value={search} onChange={setSearch} />
               <SortSelect value={sortBy} onChange={setSortBy} />
               <RandomButton pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
-              <button className="new-button" onClick={() => setShowForm(true)}>
+              <button className="new-button" onClick={openNewForm}>
                 Novo Pokémon
               </button>
             </div>
@@ -100,10 +116,16 @@ function App() {
       </main>
 
       {selectedPokemon && (
-        <PokemonDetails pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />
+        <PokemonDetails
+          pokemon={selectedPokemon}
+          onClose={() => setSelectedPokemon(null)}
+          onEdit={openEditForm}
+        />
       )}
 
-      {showForm && <PokemonForm onSave={handleCreate} onClose={() => setShowForm(false)} />}
+      {showForm && (
+        <PokemonForm pokemon={editingPokemon} onSave={handleSave} onClose={() => setShowForm(false)} />
+      )}
     </>
   );
 }

@@ -35,6 +35,10 @@
   border-color: #d62828;
 }
 
+.pokemon-form input:disabled {
+  opacity: 0.5;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 2fr;
