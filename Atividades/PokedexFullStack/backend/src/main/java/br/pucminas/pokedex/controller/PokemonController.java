@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.pucminas.pokedex.model.Pokemon;
 import br.pucminas.pokedex.service.PokemonService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pokemons")
@@ -37,14 +38,14 @@ public class PokemonController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Pokemon> create(@RequestBody Pokemon pokemon) {
+	public ResponseEntity<Pokemon> create(@Valid @RequestBody Pokemon pokemon) {
 		Pokemon created = pokemonService.create(pokemon);
 		URI location = URI.create("/api/pokemons/" + created.id());
 		return ResponseEntity.created(location).body(created);
 	}
 
 	@PutMapping("/{id}")
-	public Pokemon update(@PathVariable Integer id, @RequestBody Pokemon pokemon) {
+	public Pokemon update(@PathVariable Integer id, @Valid @RequestBody Pokemon pokemon) {
 		return pokemonService.update(id, pokemon);
 	}
 
