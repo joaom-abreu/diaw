@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
 	public ProblemDetail handleNotFound(PokemonNotFoundException exception) {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
 	}
+
+	@ExceptionHandler(PokemonAlreadyExistsException.class)
+	public ProblemDetail handleAlreadyExists(PokemonAlreadyExistsException exception) {
+		return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+	}
 }

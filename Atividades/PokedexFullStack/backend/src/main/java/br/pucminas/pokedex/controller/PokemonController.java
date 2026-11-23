@@ -1,9 +1,13 @@
 package br.pucminas.pokedex.controller;
 
+import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,5 +32,12 @@ public class PokemonController {
 	@GetMapping("/{id}")
 	public Pokemon findById(@PathVariable Integer id) {
 		return pokemonService.findById(id);
+	}
+
+	@PostMapping
+	public ResponseEntity<Pokemon> create(@RequestBody Pokemon pokemon) {
+		Pokemon created = pokemonService.create(pokemon);
+		URI location = URI.create("/api/pokemons/" + created.id());
+		return ResponseEntity.created(location).body(created);
 	}
 }
