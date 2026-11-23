@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPokemons, getTrainers } from "./services/api";
+import { createPokemon, getPokemons, getTrainers } from "./services/api";
 import { POKEMON_TYPES } from "./utils/pokemonTypes";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
@@ -8,6 +8,7 @@ import RandomButton from "./components/RandomButton";
 import TypeFilter from "./components/TypeFilter";
 import PokemonList from "./components/PokemonList";
 import PokemonDetails from "./components/PokemonDetails";
+import PokemonForm from "./components/PokemonForm";
 import TrainerList from "./components/TrainerList";
 import "./css/App.css";
 
@@ -38,6 +39,7 @@ function App() {
   const [selectedType, setSelectedType] = useState(null);
   const [sortBy, setSortBy] = useState("id");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     Promise.all([getPokemons(), getTrainers()])
@@ -48,6 +50,12 @@ function App() {
       .catch(() => setError("Não foi possível conectar à API."))
       .finally(() => setLoading(false));
   }, []);
+
+  async function handleCreate(pokemon) {
+    await createPokemon(pokemon);
+    setPokemons(await getPokemons());
+    setShowForm(false);
+  }
 
   const usedTypes = POKEMON_TYPES.filter((type) =>
     pokemons.some((pokemon) => pokemon.types.includes(type))
@@ -79,6 +87,9 @@ function App() {
               <SearchBar value={search} onChange={setSearch} />
               <SortSelect value={sortBy} onChange={setSortBy} />
               <RandomButton pokemon={filteredPokemon} onSelect={setSelectedPokemon} />
+              <button className="new-button" onClick={() => setShowForm(true)}>
+                Novo Pokémon
+              </button>
             </div>
             <TypeFilter types={usedTypes} selectedType={selectedType} onSelect={setSelectedType} />
             <PokemonList pokemon={sortedPokemon} onSelect={setSelectedPokemon} />
@@ -91,6 +102,8 @@ function App() {
       {selectedPokemon && (
         <PokemonDetails pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />
       )}
+
+      {showForm && <PokemonForm onSave={handleCreate} onClose={() => setShowForm(false)} />}
     </>
   );
 }

@@ -30,6 +30,7 @@ button {
 .type-bug, .bg-bug { --type-color: #a6b91a; }
 .type-rock, .bg-rock { --type-color: #b6a136; }
 .type-ghost, .bg-ghost { --type-color: #735797; }
+.type-dark, .bg-dark { --type-color: #705746; }
 .type-dragon, .bg-dragon { --type-color: #6f35fc; }
 .type-steel, .bg-steel { --type-color: #b7b7ce; }
 
