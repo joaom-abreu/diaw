@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:8080/api/pokemons
+
+### Listar todos os Pokémon (200)
+GET {{baseUrl}}
+
+### Buscar o Pikachu (200)
+GET {{baseUrl}}/25
+
+### Buscar Pokémon inexistente (404)
+GET {{baseUrl}}/999
+
+### Cadastrar o Chikorita (201)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "id": 152,
+  "name": "Chikorita",
+  "stats": { "hp": 45, "attack": 49, "defense": 65, "specialAttack": 49, "specialDefense": 65, "speed": 45 },
+  "types": ["Grass"]
+}
+
+### Cadastrar com id já existente (409)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "id": 25,
+  "name": "Pikachu Falso",
+  "stats": { "hp": 1, "attack": 1, "defense": 1, "specialAttack": 1, "specialDefense": 1, "speed": 1 },
+  "types": ["Electric"]
+}
+
+### Cadastrar com dados inválidos (400)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "id": 153,
+  "name": "",
+  "stats": { "hp": 0, "attack": 49, "defense": 65, "specialAttack": 49, "specialDefense": 65, "speed": 45 },
+  "types": ["Grass", "Poison", "Fire"]
+}
+
+### Atualizar o Chikorita (200)
+PUT {{baseUrl}}/152
+Content-Type: application/json
+
+{
+  "id": 152,
+  "name": "Chikorita",
+  "stats": { "hp": 50, "attack": 49, "defense": 65, "specialAttack": 49, "specialDefense": 65, "speed": 45 },
+  "types": ["Grass"]
+}
+
+### Atualizar Pokémon inexistente (404)
+PUT {{baseUrl}}/999
+Content-Type: application/json
+
+{
+  "id": 999,
+  "name": "Inexistente",
+  "stats": { "hp": 1, "attack": 1, "defense": 1, "specialAttack": 1, "specialDefense": 1, "speed": 1 },
+  "types": ["Normal"]
+}
+
+### Excluir o Chikorita (204)
+DELETE {{baseUrl}}/152
+
+### Excluir Pokémon inexistente (404)
+DELETE {{baseUrl}}/999
